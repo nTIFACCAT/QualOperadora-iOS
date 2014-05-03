@@ -1,0 +1,2 @@
+qualoperadora-ios
+=================
