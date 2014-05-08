@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "AFHTTPRequestOperationManager.h"
 
 @interface ViewController ()
 
@@ -35,6 +36,13 @@
     [consultTextField resignFirstResponder];
     
     NSLog(@"consult touched");
+    
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:@"http://private-61fc-rodrigoknascimento.apiary-mock.com/consulta/5199999999" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"JSON: %@", responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"Error: %@", error);
+    }];
 
 }
 
