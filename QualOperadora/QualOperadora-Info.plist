@@ -30,6 +30,13 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Raleway-Bold.otf</string>
+		<string>Raleway-Light.otf</string>
+		<string>Raleway-Medium.otf</string>
+		<string>Raleway-SemiBold.otf</string>
+	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
