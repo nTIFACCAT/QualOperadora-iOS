@@ -45,22 +45,23 @@
 
 - (IBAction)consultTouchUpInside:(id)sender {
     [consultTextField resignFirstResponder];
-
-    NSLog(@"consult touched");
     
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:@"http://private-61fc-rodrigoknascimento.apiary-mock.com/consulta/5199999999" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
+
+    //NSString *urlString = [NSString stringWithFormat:@"http://qualoperadora.herokuapp.com/consulta/%@", consultTextField.text];
+    
+    [manager GET:@"http://qualoperadora.herokuapp.com/consulta/5193037685" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
         NSLog(@" A operadora é %@", [responseObject valueForKeyPath:@"operadora"]);
       
         UIFont *ralewayMedium = [UIFont fontWithName:@"Raleway-Medium.otf" size:18];
         resultLabel.text = [NSString stringWithFormat:@" A operadora é \n%@", [responseObject valueForKeyPath:@"operadora"]];
         resultLabel.font = ralewayMedium;
-      
-        [UIView beginAnimations:@"animateTableView" context:nil];
-        [UIView setAnimationDuration:0.4];
-        [resultView setFrame:CGRectMake( 0.0f, 360, 320.0f, 520)]; //notice this is ON screen!
-        [UIView commitAnimations];
+        
+        [UIView animateWithDuration:0.5 animations:^{
+            [resultView setFrame:CGRectMake(0, 360, 320, 520)];
+        }];
+        
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
@@ -73,6 +74,59 @@
   NSLog(@"Tentando ligar para : %@", consultTextField.text);
 }
 
+- (IBAction)showPicker:(id)sender {
+    
+    ABPeoplePickerNavigationController *picker =
+    [[ABPeoplePickerNavigationController alloc] init];
+    picker.peoplePickerDelegate = self;
+    
+    [self presentViewController:picker animated:YES completion:nil];
+    
+}
+
+- (void)peoplePickerNavigationControllerDidCancel:
+(ABPeoplePickerNavigationController *)peoplePicker
+{
+    [self dismissModalViewControllerAnimated:YES];
+}
+
+
+- (BOOL)peoplePickerNavigationController:
+(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person {
+    
+    [self displayPerson:person];
+    [self dismissModalViewControllerAnimated:YES];
+    
+    return NO;
+}
+
+- (BOOL)peoplePickerNavigationController:
+(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+                                property:(ABPropertyID)property
+                              identifier:(ABMultiValueIdentifier)identifier
+{
+    return NO;
+}
+
+- (void)displayPerson:(ABRecordRef)person
+{
+    NSString* name = (__bridge_transfer NSString*)ABRecordCopyValue(person,
+                                                                    kABPersonFirstNameProperty);
+    
+    NSString* phone = nil;
+    ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
+                                                     kABPersonPhoneProperty);
+    if (ABMultiValueGetCount(phoneNumbers) > 0) {
+        phone = (__bridge_transfer NSString*)
+        ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
+    } else {
+        phone = @"[None]";
+    }
+    self.consultTextField.text = phone;
+    CFRelease(phoneNumbers);
+}
 
 #pragma mark textField delegate
 

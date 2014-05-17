@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AddressBookUI/AddressBookUI.h>
 
-@interface ViewController : UIViewController<UITextFieldDelegate>
+@interface ViewController : UIViewController<UITextFieldDelegate,ABPeoplePickerNavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *consultTextField;
 @property (weak, nonatomic) IBOutlet UIButton *consultButton;
 @property (weak, nonatomic) IBOutlet UILabel *resultLabel;
@@ -18,5 +19,6 @@
 - (IBAction)consultTouchUpInside:(id)sender;
 - (IBAction)callPhone:(id)sender;
 
+- (IBAction)showPicker:(id)sender;
 
 @end
