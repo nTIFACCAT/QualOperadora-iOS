@@ -45,14 +45,12 @@
 
 - (IBAction)consultTouchUpInside:(id)sender {
     [consultTextField resignFirstResponder];
-    
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
 
-    //NSString *urlString = [NSString stringWithFormat:@"http://qualoperadora.herokuapp.com/consulta/%@", consultTextField.text];
-    
-    [manager GET:@"http://qualoperadora.herokuapp.com/consulta/5193037685" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        NSLog(@" A operadora é %@", [responseObject valueForKeyPath:@"operadora"]);
+    NSString *phone = [self unformatPhoneNumber:consultTextField.text];
+    NSString *urlString = [NSString stringWithFormat:@"http://qualoperadora.herokuapp.com/consulta/%@", phone];
+  
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
+    [manager GET:urlString parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
         UIFont *ralewayMedium = [UIFont fontWithName:@"Raleway-Medium.otf" size:18];
         resultLabel.text = [NSString stringWithFormat:@" A operadora é \n%@", [responseObject valueForKeyPath:@"operadora"]];
@@ -69,9 +67,10 @@
 }
 
 - (IBAction)callPhone:(id)sender {
-  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", consultTextField.text]]];
   
-  NSLog(@"Tentando ligar para : %@", consultTextField.text);
+  NSString *phone = [self unformatPhoneNumber:consultTextField.text];
+  
+  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:0%@", phone]]];
 }
 
 - (IBAction)showPicker:(id)sender {
@@ -221,6 +220,13 @@
     return phoneNumber;
 }
 
-
+-(NSString*)unformatPhoneNumber:(NSString*)phoneNumber {
+  phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@" " withString:@""];
+  phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"(" withString:@""];
+  phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@")" withString:@""];
+  phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
+  
+  return phoneNumber;
+}
 
 @end
