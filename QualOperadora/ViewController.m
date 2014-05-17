@@ -18,12 +18,23 @@
 @synthesize consultButton;
 @synthesize consultTextField;
 @synthesize resultLabel;
+@synthesize resultView;
 
 - (void)viewDidLoad
 {
-    [super viewDidLoad];
-
-    [consultTextField setDelegate:self];
+  [super viewDidLoad];
+  // UIFont *customFont = [UIFont fontWithName:@"Raleway-Light.otf" size:20];
+  
+  // Deixa o BG transparente para a imagem de BG aparecer
+  self.view.backgroundColor = [UIColor clearColor];
+  
+  
+//  UIFont *raleWay = [UIFont fontWithName:@"Museo Sans" size:16];
+//  weightLabel.font = museoSans;
+  
+  
+  
+  [consultTextField setDelegate:self];
 }
 
 - (void)didReceiveMemoryWarning
@@ -40,10 +51,26 @@
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     [manager GET:@"http://private-61fc-rodrigoknascimento.apiary-mock.com/consulta/5199999999" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"JSON: %@", responseObject);
+        NSLog(@" A operadora é %@", [responseObject valueForKeyPath:@"operadora"]);
+      
+        UIFont *ralewayMedium = [UIFont fontWithName:@"Raleway-Medium.otf" size:18];
+        resultLabel.text = [NSString stringWithFormat:@" A operadora é \n%@", [responseObject valueForKeyPath:@"operadora"]];
+        resultLabel.font = ralewayMedium;
+      
+        [UIView beginAnimations:@"animateTableView" context:nil];
+        [UIView setAnimationDuration:0.4];
+        [resultView setFrame:CGRectMake( 0.0f, 360, 320.0f, 520)]; //notice this is ON screen!
+        [UIView commitAnimations];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"Error: %@", error);
     }];
 
+}
+
+- (IBAction)callPhone:(id)sender {
+  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", consultTextField.text]]];
+  
+  NSLog(@"Tentando ligar para : %@", consultTextField.text);
 }
 
 
@@ -139,5 +166,7 @@
     
     return phoneNumber;
 }
+
+
 
 @end
