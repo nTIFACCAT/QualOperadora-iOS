@@ -45,13 +45,12 @@
 
 - (IBAction)consultTouchUpInside:(id)sender {
     [consultTextField resignFirstResponder];
-
-    NSLog(@"consult touched");
-    
+  
+    NSString *phone = [self unformatPhoneNumber:consultTextField.text];
+    NSString *url = [NSString stringWithFormat:@"http://private-61fc-rodrigoknascimento.apiary-mock.com/consulta/%@", phone];
+  
     AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    [manager GET:@"http://private-61fc-rodrigoknascimento.apiary-mock.com/consulta/5199999999" parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"JSON: %@", responseObject);
-        NSLog(@" A operadora é %@", [responseObject valueForKeyPath:@"operadora"]);
+    [manager GET:url parameters:nil success:^(AFHTTPRequestOperation *operation, id responseObject) {
       
         UIFont *ralewayMedium = [UIFont fontWithName:@"Raleway-Medium.otf" size:18];
         resultLabel.text = [NSString stringWithFormat:@" A operadora é \n%@", [responseObject valueForKeyPath:@"operadora"]];
@@ -68,9 +67,10 @@
 }
 
 - (IBAction)callPhone:(id)sender {
-  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:%@", consultTextField.text]]];
   
-  NSLog(@"Tentando ligar para : %@", consultTextField.text);
+  NSString *phone = [self unformatPhoneNumber:consultTextField.text];
+  
+  [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"tel:0%@", phone]]];
 }
 
 
@@ -167,6 +167,13 @@
     return phoneNumber;
 }
 
-
+-(NSString*)unformatPhoneNumber:(NSString*)phoneNumber {
+  phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@" " withString:@""];
+  phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"(" withString:@""];
+  phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@")" withString:@""];
+  phoneNumber = [phoneNumber stringByReplacingOccurrencesOfString:@"-" withString:@""];
+  
+  return phoneNumber;
+}
 
 @end
