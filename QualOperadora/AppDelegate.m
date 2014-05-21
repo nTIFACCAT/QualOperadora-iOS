@@ -17,7 +17,7 @@
     UIImageView *myGraphic = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bg.png"]];
     [self.window.rootViewController.view addSubview: myGraphic];
     [self.window.rootViewController.view sendSubviewToBack: myGraphic];
-  
+
     // Override point for customization after application launch.
     return YES;
 }

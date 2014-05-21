@@ -5,22 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>97FB7D0F-F6B0-4FD4-8C18-0740700C6EBC</string>
-	<string>3E39C8E3-390F-4E91-8690-24D456E4CA5F</string>
+	<string>804E1275-FE5D-41BA-80F3-A71D5D70E89E</string>
 	<key>IDESourceControlProjectName</key>
 	<string>QualOperadora</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>243F1DF4-D5AC-4378-85E9-68F54864A691</key>
-		<key>1C6A830A-DCAA-4487-B9F9-900E408FC16A</key>
+		<key>2B68D038-A3F5-42D4-9573-495FA3444826</key>
 		<string>https://github.com/nTIFACCAT/qualoperadora-ios.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>QualOperadora.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>243F1DF4-D5AC-4378-85E9-68F54864A691</key>
-		<key>1C6A830A-DCAA-4487-B9F9-900E408FC16A</key>
+		<key>2B68D038-A3F5-42D4-9573-495FA3444826</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
@@ -28,20 +25,16 @@
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>243F1DF4-D5AC-4378-85E9-68F54864A691</string>
-	<string>1C6A830A-DCAA-4487-B9F9-900E408FC16A</string>
+	<string>2B68D038-A3F5-42D4-9573-495FA3444826</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>243F1DF4-D5AC-4378-85E9-68F54864A691</string>
+			<string>2B68D038-A3F5-42D4-9573-495FA3444826</string>
 			<key>IDESourceControlWCCName</key>
 			<string>QualOperadora</string>
-			<string>1C6A830A-DCAA-4487-B9F9-900E408FC16A</string>
-			<key>IDESourceControlWCCName</key>
-			<string>qualoperadora-ios</string>
 		</dict>
 	</array>
 </dict>

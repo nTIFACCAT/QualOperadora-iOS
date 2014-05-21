@@ -19,6 +19,7 @@
 @synthesize consultTextField;
 @synthesize resultLabel;
 @synthesize resultView;
+@synthesize spinner;
 
 - (void)viewDidLoad
 {
@@ -29,10 +30,12 @@
   self.view.backgroundColor = [UIColor clearColor];
   
   
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [spinner setCenter:CGPointMake(160, 400)];
+    [self.view addSubview:spinner];
+    
 //  UIFont *raleWay = [UIFont fontWithName:@"Museo Sans" size:16];
 //  weightLabel.font = museoSans;
-  
-  
   
   [consultTextField setDelegate:self];
 }
@@ -40,11 +43,12 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)consultTouchUpInside:(id)sender {
     [consultTextField resignFirstResponder];
+    
+    [spinner startAnimating];
 
     NSString *phone = [self unformatPhoneNumber:consultTextField.text];
     NSString *urlString = [NSString stringWithFormat:@"http://qualoperadora.herokuapp.com/consulta/%@", phone];
@@ -58,6 +62,7 @@
         
         [UIView animateWithDuration:0.5 animations:^{
             [resultView setFrame:CGRectMake(0, 360, 320, 520)];
+            [spinner stopAnimating];
         }];
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -86,7 +91,7 @@
 - (void)peoplePickerNavigationControllerDidCancel:
 (ABPeoplePickerNavigationController *)peoplePicker
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 
@@ -95,7 +100,7 @@
       shouldContinueAfterSelectingPerson:(ABRecordRef)person {
     
     [self displayPerson:person];
-    [self dismissModalViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
     return NO;
 }
@@ -111,9 +116,6 @@
 
 - (void)displayPerson:(ABRecordRef)person
 {
-    NSString* name = (__bridge_transfer NSString*)ABRecordCopyValue(person,
-                                                                    kABPersonFirstNameProperty);
-    
     NSString* phone = nil;
     ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
                                                      kABPersonPhoneProperty);

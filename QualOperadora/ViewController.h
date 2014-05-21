@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *resultLabel;
 @property (weak, nonatomic) IBOutlet UIView *resultView;
 @property (weak, nonatomic) IBOutlet UIButton *callButton;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *spinner;
 
 - (IBAction)consultTouchUpInside:(id)sender;
 - (IBAction)callPhone:(id)sender;

@@ -76,6 +76,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <size key="freeformSize" width="320" height="568"/>
                     <connections>
                         <outlet property="callButton" destination="pxA-Dd-Znr" id="WPr-wz-QYf"/>
                         <outlet property="consultButton" destination="bKh-rY-x6Z" id="opz-zs-WoF"/>
